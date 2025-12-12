@@ -128,6 +128,25 @@ public enum Operation {
                             .isExternalResource(true)
                             .build()
             )
+    ),
+    APPROVE(
+        (params) -> "Approve a " + params.getResourceName() + ".",
+            List.of(
+            CrudResponseSpecification.builder()
+            .httpStatus(HttpStatus.OK)
+                        .descriptionTemplate("The approved %s as a JSON object.")
+                        .build(),
+                CrudResponseSpecification.builder()
+                        .httpStatus(HttpStatus.NOT_FOUND)
+                        .descriptionTemplate("No %s with the provided ID could be found.")
+                        .isErrorResponse(true)
+                        .build(),
+                CrudResponseSpecification.builder()
+                        .httpStatus(HttpStatus.BAD_REQUEST)
+                        .descriptionTemplate("Approval could not be performed.")
+                        .isErrorResponse(true)
+                        .build()
+        )
     );
 
     /**
